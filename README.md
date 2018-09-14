@@ -24,10 +24,9 @@ Include a JavaScript (Angular.JS) library for the client.
 // From a Middleware that extends Reliv\RcmApiLib\Middleware\AbstractJsonController
 
     /** EXAMPLE: InputFilter (Zend)  **/
-    public function __invoke(
+    public function process(
         ServerRequestInterface $request,
-        ResponseInterface $response,
-        callable $next
+        DelegateInterface $delegate
     ) {
         $inputFilter = new RcmGoogleAnalyticsFilter();
 
@@ -75,10 +74,9 @@ Include a JavaScript (Angular.JS) library for the client.
     
 ```php    
     /** EXAMPLE: General **/
-    public function __invoke(
+    public function process(
         ServerRequestInterface $request,
-        ResponseInterface $response,
-        callable $next
+        DelegateInterface $delegate
     ) {
         return $this->getApiResponse(
             ['my' => 'response'],

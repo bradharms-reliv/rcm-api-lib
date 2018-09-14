@@ -2,13 +2,16 @@
 
 namespace Reliv\RcmApiLib\Middleware;
 
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Zend\Diactoros\Response;
 
 /**
  * @author James Jervis - https://github.com/jerv13
  */
-class AssetController
+class AssetController implements MiddlewareInterface
 {
     /**
      *
@@ -115,16 +118,17 @@ class AssetController
     }
 
     /**
-     * __invoke
+     * process
      *
      * @param ServerRequestInterface $request
-     * @param ResponseInterface      $response
-     * @param callable|null          $next
+     * @param DelegateInterface|null $delegate
      *
      * @return ResponseInterface
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
+    public function process(ServerRequestInterface $request, DelegateInterface $delegate = null)
     {
+        $response = new Response();
+
         $fileName = $this->getFileName($request);
 
         if (empty($fileName)) {
